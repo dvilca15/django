@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}Agendar cita{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {% if user.is_authenticated %}
+                    <h2 class="text-center mb-4">Registra tu cita {{ request.user.first_name }} {{ request.user.last_name }} {{ request.user.first_name }} 
+                        {{ request.user.date_of_birth }}</h2>
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        {{ form.non_field_errors }}
+                        
+                        <div class="form-group">
+                            {{ form.nombre.label_tag }}
+                            {{ form.nombre }}
+                            {{ form.nombre.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.apellido.label_tag }}
+                            {{ form.apellido }}
+                            {{ form.apellido.errors }}
+                        </div>
+
+                        <!-- Agrega más campos según tu modelo CitaMedica -->
+
+                        <button type="submit" class="btn btn-primary btn-block">Agendar Cita</button>
+                    </form>
+                {% else %}
+                    <div class="text-center">
+                        <p class="mb-3">Debes iniciar sesión o registrarte antes de agendar una cita médica.</p>
+                        <a href="{% url 'login' %}" class="btn btn-primary">Iniciar sesión</a>
+                        <a href="{% url 'signup' %}" class="btn btn-secondary">Registrarse</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

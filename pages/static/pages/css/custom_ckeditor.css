@@ -1,0 +1,12 @@
+.django-ckeditor-widget, .cke_editor_id_content {
+    width: 100% !important;
+    max-width: 821px !important;
+}
+
+.image-max-size{
+    outline: 3px solid black;
+    max-width: 300px;
+    max-height: 300px;
+    width: 200px;
+    height: 200px;
+}

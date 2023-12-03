@@ -1,27 +1,59 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}{{page.title}}{% endblock %}
+{% block title %}{{ page.title }}{% endblock %}
 {% include 'pages/includes/pages_menu.html' %}
 {% block content %}
-<main role="main">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-9 mx-auto">
-      {% if page.image %}
-        <img class="image-max-size" src="{{ page.image.url }}" style='outline: 3px solid black;max-width: 300px;
-        max-height: 300px;
-        width: 100px;
-        height: 100px;' alt="{{ page.title }}"  >
-      {% endif %}
-        <h2 class="section-heading mb-4">{{page.title}}</h2>
-        <div>
-          {{page.content|safe}}
-          {% if request.user.is_staff %}
-            <p><a href="{%url 'pages:update' page.id %}">Editar</a></p>
+  <main role="main">
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <!-- Contenido de la página -->
+          <div class="card">
+            <div class="card-body text-center">
+              <h2 class="section-heading mb-4">{{ page.title }}</h2>
+              {{ page.content|safe }}
+              {% if page.image %}
+                <img class="image-max-size" src="{{ page.image.url }}" style='outline: 3px solid black; max-width: 400px; max-height: 400px;' alt="{{ page.title }}">
+              {% endif %}
+            </div>
+          </div>
+          {% if user.is_staff %}
+            <!-- Botón de Editar si el usuario es staff -->
+            <div class="text-center mt-3">
+              <a href="{% url 'pages:update' page.id %}" class="btn btn-primary">Editar</a>
+            </div>
           {% endif %}
         </div>
+        {% if user.is_staff %}
+          <!-- Contenido adicional para usuarios staff -->
+          <div class="col-md-6">
+            <div class="card text-center">
+              <div class="card-body">
+                <h3>Citas Programadas:</h3>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Hora</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for cita in citas_programadas %}
+                      <tr>
+                        <td>{{ cita.fecha }}</td>
+                        <td>{{ cita.hora }}</td>
+                        <td>{{ cita.estado }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        {% endif %}
       </div>
     </div>
-  </div>
-</main>
+  </main>
 {% endblock %}
+

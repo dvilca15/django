@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% block title %}Lista de Citas{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Tus Citas Programadas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Tipo de Examen</th>
+                    <th>Estado</th>
+                    <!-- Agrega más columnas según tus necesidades -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                    <tr>
+                        <td>{{ cita.id|default:"Sin fecha"}}</td>
+                        <td>{{ cita.fecha|default:"Sin fecha"}}</td>
+                        <td>{{ cita.hora|default:"Sin hora" }}</td>
+                        <td>{{ cita.title|default:"Sin tipo de examen"}}</td>
+                        <td>{{ cita.estado}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

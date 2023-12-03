@@ -33,6 +33,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'profiles:list' %}">Perfiles</a>
               </li>
+              <!-- Agrega esto donde desees que aparezca el enlace -->
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'lista_citas' %}">Mis Citas</a>
+              </li>
+              {% if request.user.is_staff %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'lista_citas_admin' %}">Historial de citas</a>
+              </li>
+              {% endif %}
             </ul>
 
             <ul class="navbar-nav">

@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from .forms import PageForm
 from django.shortcuts import redirect
-
+from citas_medicas.models import CitaMedica
 
 class StaffRequiredMixin (object):
     '''
@@ -16,17 +16,19 @@ class StaffRequiredMixin (object):
     '''
     @method_decorator(staff_member_required)
     def dispatch(self, request,*args,**kwargs):
-        '''if not request.user.is_staff:
-            return redirect(reverse_lazy('admin:login'))'''
         return super(StaffRequiredMixin,self).dispatch(request,*args,**kwargs)
-    
-    
 # Create your views here.
 class PagesListView(ListView):
     model = Page
 
-class PageDetailView(DetailView):
+class PagesDetailView(DetailView):
     model = Page
+    template_name = 'pages/page_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtener citas programadas para la página actual
+        context['citas_programadas'] = CitaMedica.objects.filter(page=self.object, estado='PROGRAMADA')
+        return context
     
 @method_decorator(staff_member_required, name='dispatch')
 class PageCreate(CreateView):

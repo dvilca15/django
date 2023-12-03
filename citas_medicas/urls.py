@@ -1,8 +1,13 @@
 from django.urls import path
-from .views import AgendarCita
+from .views import AgendarCita, ListaCitas, ListaCitasAdmin
 
+app_name = 'citas_medicas'
 
 citas_patterns = [
     path('agendar/', AgendarCita.as_view(), name='agendar_cita'),
-    # Agrega otras URLs según sea necesario
+    path('citas/', ListaCitas.as_view(), name='lista_citas'),
+    path('citas_admin/', ListaCitasAdmin.as_view(), name='lista_citas_admin'),
+    
 ]
+
+urlpatterns = citas_patterns
